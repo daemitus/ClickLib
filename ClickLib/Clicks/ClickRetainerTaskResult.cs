@@ -10,8 +10,8 @@ namespace ClickLib.Clicks
 
         public unsafe ClickRetainerTaskResult(DalamudPluginInterface pluginInterface) : base(pluginInterface)
         {
-            AvailableClicks["retainer_venture_confirm"] = (addon) => SendClick(addon, EventType.CHANGE, 2, ((AddonRetainerTaskResult*)addon)->ConfirmButton->AtkComponentBase.OwnerNode);
-            AvailableClicks["retainer_venture_reassign"] = (addon) => SendClick(addon, EventType.CHANGE, 3, ((AddonRetainerTaskResult*)addon)->ReassignButton->AtkComponentBase.OwnerNode);
+            AvailableClicks["retainer_venture_result_confirm"] = (addon) => SendClick(addon, EventType.CHANGE, 2, ((AddonRetainerTaskResult*)addon)->ConfirmButton->AtkComponentBase.OwnerNode);
+            AvailableClicks["retainer_venture_result_reassign"] = (addon) => SendClick(addon, EventType.CHANGE, 3, ((AddonRetainerTaskResult*)addon)->ReassignButton->AtkComponentBase.OwnerNode);
         }
     }
 }
