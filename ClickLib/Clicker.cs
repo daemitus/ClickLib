@@ -11,7 +11,7 @@ namespace ClickLib
 
         private static bool SetupComplete = false;
 
-        internal static void Initialize(DalamudPluginInterface pluginInterface)
+        public static void Initialize(DalamudPluginInterface pluginInterface)
         {
             if (!SetupComplete)
             {
