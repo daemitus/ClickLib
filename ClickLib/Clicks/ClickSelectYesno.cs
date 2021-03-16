@@ -12,6 +12,7 @@ namespace ClickLib.Clicks
         {
             AvailableClicks["select_yes"] = (addon) => SendClick(addon, EventType.CHANGE, 0, ((AddonSelectYesno*)addon)->YesButton->AtkComponentBase.OwnerNode);
             AvailableClicks["select_no"] = (addon) => SendClick(addon, EventType.CHANGE, 1, ((AddonSelectYesno*)addon)->NoButton->AtkComponentBase.OwnerNode);
+            AvailableClicks["select_checkbox"] = (addon) => SendClick(addon, EventType.CHANGE, 3, ((AddonSelectYesno*)addon)->ConfirmCheckBox->AtkComponentButton.AtkComponentBase.OwnerNode);
         }
     }
 }
