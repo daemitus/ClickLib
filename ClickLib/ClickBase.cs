@@ -65,7 +65,7 @@ namespace ClickLib
         {
             var addon = Interface.Framework.Gui.GetUiObjectByName(name, index);
             if (addon == IntPtr.Zero)
-                throw new InvalidClickException($"Window is not available for that click");
+                throw new InvalidClickException("Window is not available for that click");
             return addon;
         }
 

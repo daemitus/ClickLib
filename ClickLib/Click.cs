@@ -33,6 +33,7 @@ namespace ClickLib
                 throw new InvalidClickException("Click has not been initialized yet");
 
             foreach (var clickable in Clickables)
+            {
                 try
                 {
                     if (clickable.Click(name))
@@ -40,10 +41,11 @@ namespace ClickLib
                 }
                 catch (InvalidClickException ex)
                 {
-                    PluginLog.Error(ex, $"Error while performing {name} click");
-                    return;
+                    throw new InvalidClickException($"Error while performing {name} click", ex);
                 }
-            throw new InvalidClickException($"Invalid click");
+            }
+
+            throw new ClickNotFoundError("Invalid click");
         }
     }
 }
