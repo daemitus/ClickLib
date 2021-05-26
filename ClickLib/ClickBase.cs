@@ -22,11 +22,13 @@ namespace ClickLib
             Interface = pluginInterface;
         }
 
-        internal bool Click(string name)
+        internal bool Click(string name, IntPtr addon)
         {
             if (AvailableClicks.TryGetValue(name, out Action<IntPtr> clickDelegate))
             {
-                var addon = GetAddonByName(AddonName);
+                if (addon == default)
+                    addon = GetAddonByName(AddonName);
+
                 clickDelegate(addon);
                 return true;
             }

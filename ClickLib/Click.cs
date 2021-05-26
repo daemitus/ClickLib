@@ -27,7 +27,9 @@ namespace ClickLib
             }
         }
 
-        public static void SendClick(string name)
+        public static void SendClick(string name) => SendClick(name, default);
+
+        public static void SendClick(string name, IntPtr addon)
         {
             if (!SetupComplete)
                 throw new InvalidClickException("Click has not been initialized yet");
@@ -36,7 +38,7 @@ namespace ClickLib
             {
                 try
                 {
-                    if (clickable.Click(name))
+                    if (clickable.Click(name, addon))
                         return;
                 }
                 catch (InvalidClickException ex)
