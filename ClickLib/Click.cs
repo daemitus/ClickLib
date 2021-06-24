@@ -17,7 +17,9 @@ namespace ClickLib
             {
                 SetupComplete = true;
 
-                var types = typeof(ClickBase).Assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(ClickBase)));
+                var types = typeof(ClickBase).Assembly.GetTypes()
+                    .Where(t => t.IsSubclassOf(typeof(ClickBase)));
+
                 foreach (var type in types)
                 {
                     var ctor = type.GetConstructor(new Type[] { typeof(DalamudPluginInterface) });

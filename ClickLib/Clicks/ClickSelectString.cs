@@ -1,6 +1,5 @@
 ﻿using Dalamud.Plugin;
 using FFXIVClientStructs.FFXIV.Client.UI;
-using FFXIVClientStructs.FFXIV.Component.GUI;
 using System;
 using System.Runtime.InteropServices;
 
@@ -29,8 +28,6 @@ namespace ClickLib.Clicks
             var addon = (AddonSelectString*)addonPtr;
             var popupMenu = &addon->PopupMenu;
             var componentList = popupMenu->List;
-
-            PluginLog.Information($"Perparing to send select_string{index}");
 
             var arg5 = Marshal.AllocHGlobal(0x40);
             for (var i = 0; i < 0x40; i++)
