@@ -27,8 +27,8 @@ namespace ClickLib.Clicks
         private unsafe void ClickItem(IntPtr addonPtr, int index)
         {
             var addon = (AddonSelectString*)addonPtr;
-            var eventThing = &addon->SelectStringThing;
-            var componentList = eventThing->AtkComponentList;
+            var popupMenu = &addon->PopupMenu;
+            var componentList = popupMenu->List;
 
             PluginLog.Information($"Perparing to send select_string{index}");
 
@@ -40,7 +40,7 @@ namespace ClickLib.Clicks
             Marshal.WriteInt16(arg5, 0x10, (short)index);
             Marshal.WriteInt16(arg5, 0x16, (short)index);
 
-            SendClick(new IntPtr(eventThing), EventType.LIST_INDEX_CHANGE, 0, componentList->AtkComponentBase.OwnerNode, arg5);
+            SendClick(new IntPtr(popupMenu), EventType.LIST_INDEX_CHANGE, 0, componentList->AtkComponentBase.OwnerNode, arg5);
         }
     }
 }
