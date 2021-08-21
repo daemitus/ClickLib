@@ -1,5 +1,4 @@
-﻿using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Component.GUI;
+﻿using FFXIVClientStructs.FFXIV.Component.GUI;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -11,15 +10,12 @@ namespace ClickLib
         protected abstract string Name { get; }
         protected abstract string AddonName { get; }
 
-        protected DalamudPluginInterface Interface { get; private set; }
-
         protected Dictionary<string, Action<IntPtr>> AvailableClicks { get; } = new Dictionary<string, Action<IntPtr>>();
 
         protected delegate void ReceiveEventDelegate(IntPtr addon, EventType evt, uint a3, IntPtr a4, IntPtr a5);
 
-        internal ClickBase(DalamudPluginInterface pluginInterface)
+        internal ClickBase()
         {
-            Interface = pluginInterface;
         }
 
         internal bool Click(string name, IntPtr addon)
@@ -63,12 +59,21 @@ namespace ClickLib
 
         protected IntPtr GetAddonByName(string name) => GetAddonByName(name, 1);
 
-        protected IntPtr GetAddonByName(string name, int index)
+        protected unsafe IntPtr GetAddonByName(string name, int index)
         {
-            var addon = Interface.Framework.Gui.GetUiObjectByName(name, index);
-            if (addon == IntPtr.Zero)
+            var atkStage = AtkStage.GetSingleton();
+            if (atkStage == null)
                 throw new InvalidClickException("Window is not available for that click");
-            return addon;
+
+            var unitMgr = atkStage->RaptureAtkUnitManager; ;
+            if (unitMgr == null)
+                throw new InvalidClickException("Window is not available for that click");
+
+            var addon = unitMgr->GetAddonByName(name, index);
+            if (addon == null)
+                throw new InvalidClickException("Window is not available for that click");
+
+            return (IntPtr)addon;
         }
 
         protected unsafe ReceiveEventDelegate GetReceiveEventDelegate(AtkEventListener* eventListener)

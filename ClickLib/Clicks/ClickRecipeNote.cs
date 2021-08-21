@@ -1,5 +1,4 @@
-﻿using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.UI;
+﻿using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
@@ -8,7 +7,7 @@ namespace ClickLib.Clicks
         protected override string Name => "RecipeBook";
         protected override string AddonName => "RecipeNote";
 
-        public unsafe ClickRecipeNote(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+        public unsafe ClickRecipeNote() : base()
         {
             AvailableClicks["synthesize"] = (addon) => SendClick(addon, EventType.CHANGE, 13, ((AddonRecipeNote*)addon)->SynthesizeButton->AtkComponentBase.OwnerNode);
             AvailableClicks["trial_synthesis"] = (addon) => SendClick(addon, EventType.CHANGE, 15, ((AddonRecipeNote*)addon)->TrialSynthesisButton->AtkComponentBase.OwnerNode);

@@ -1,5 +1,4 @@
-﻿using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.UI;
+﻿using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 
 namespace ClickLib.Clicks
@@ -9,7 +8,7 @@ namespace ClickLib.Clicks
         protected override string Name => "ContextIconMenu";
         protected override string AddonName => "ContextIconMenu";
 
-        public unsafe ClickContextIconMenu(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+        public unsafe ClickContextIconMenu() : base()
         {
             //AvailableClicks["context_icon_menu1"] = (addon) => ContextIconMenu(addon, 1);
         }

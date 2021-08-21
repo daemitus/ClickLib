@@ -1,5 +1,4 @@
-﻿using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.UI;
+﻿using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
@@ -8,7 +7,7 @@ namespace ClickLib.Clicks
         protected override string Name => "GuildLeve";
         protected override string AddonName => "GuildLeve";
 
-        public unsafe ClickGuildLeve(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+        public unsafe ClickGuildLeve() : base()
         {
             AvailableClicks["guild_leve_fieldcraft"] = (addon) => SendClick(addon, EventType.CHANGE, 6, ((AddonGuildLeve*)addon)->FieldcraftButton->AtkComponentBase.OwnerNode);
             AvailableClicks["guild_leve_tradecraft"] = (addon) => SendClick(addon, EventType.CHANGE, 7, ((AddonGuildLeve*)addon)->TradecraftButton->AtkComponentBase.OwnerNode);

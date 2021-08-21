@@ -1,5 +1,4 @@
-﻿using Dalamud.Plugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,21 +10,37 @@ namespace ClickLib
 
         private static bool SetupComplete = false;
 
-        public static void Initialize(DalamudPluginInterface pluginInterface)
+        public static void Initialize()
         {
             if (!SetupComplete)
             {
                 SetupComplete = true;
+
+                FFXIVClientStructs.Resolver.Initialize();
 
                 var types = typeof(ClickBase).Assembly.GetTypes()
                     .Where(t => t.IsSubclassOf(typeof(ClickBase)));
 
                 foreach (var type in types)
                 {
-                    var ctor = type.GetConstructor(new Type[] { typeof(DalamudPluginInterface) });
-                    var clickable = (ClickBase)ctor.Invoke(new object[] { pluginInterface });
+                    var clickable = (ClickBase)Activator.CreateInstance(type);
                     Clickables.Add(clickable);
                 }
+            }
+        }
+
+        public static bool TrySendClick(string name) => TrySendClick(name, default);
+
+        public static bool TrySendClick(string name, IntPtr addon)
+        {
+            try
+            {
+                SendClick(name, addon);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

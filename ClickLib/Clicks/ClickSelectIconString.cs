@@ -1,5 +1,4 @@
-﻿using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.UI;
+﻿using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 using System.Runtime.InteropServices;
 
@@ -10,7 +9,7 @@ namespace ClickLib.Clicks
         protected override string Name => "SelectIconString";
         protected override string AddonName => "SelectIconString";
 
-        public unsafe ClickSelectIconString(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+        public unsafe ClickSelectIconString() : base()
         {
             AvailableClicks["select_icon_string1"] = (addon) => ClickItem(addon, 0);
             AvailableClicks["select_icon_string2"] = (addon) => ClickItem(addon, 1);

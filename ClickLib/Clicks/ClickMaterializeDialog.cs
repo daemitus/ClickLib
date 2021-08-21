@@ -1,5 +1,4 @@
-﻿using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.UI;
+﻿using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
@@ -8,7 +7,7 @@ namespace ClickLib.Clicks
         protected override string Name => "MaterializeDialog";
         protected override string AddonName => "MaterializeDialog";
 
-        public unsafe ClickMaterializeDialog(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+        public unsafe ClickMaterializeDialog() : base()
         {
             AvailableClicks["materialize"] = (addon) => SendClick(addon, EventType.CHANGE, 0, ((AddonMaterializeDialog*)addon)->YesButton->AtkComponentBase.OwnerNode);
         }

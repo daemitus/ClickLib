@@ -1,5 +1,4 @@
-﻿using Dalamud.Plugin;
-using FFXIVClientStructs.FFXIV.Client.UI;
+﻿using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
@@ -8,7 +7,7 @@ namespace ClickLib.Clicks
         protected override string Name => "Collectables";
         protected override string AddonName => "GatheringMasterpiece";
 
-        public unsafe ClickGatheringMasterpiece(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+        public unsafe ClickGatheringMasterpiece() : base()
         {
             AvailableClicks["collect"] = (addon) => SendClick(addon, EventType.ICON_TEXT_ROLL_OUT, 112, ((AddonGatheringMasterpiece*)addon)->CollectDragDrop->AtkComponentBase.OwnerNode);
         }
