@@ -1,16 +1,31 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickTalk : ClickBase
+    /// <summary>
+    /// Addon Talk.
+    /// </summary>
+    public sealed class ClickTalk : ClickBase<AddonTalk>
     {
-        protected override string Name => "Talk";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickTalk"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickTalk(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "Talk";
 
-        public unsafe ClickTalk(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            AvailableClicks["talk"] = (addon) => SendClick(addon, EventType.INPUT, 0, ((AddonTalk*)addon)->AtkStage);
-        }
+        /// <summary>
+        /// Click the talk dialog.
+        /// </summary>
+        [ClickName("talk")]
+        public unsafe void Click()
+            => this.ClickStage(0, this.Type->AtkStage);
     }
 }

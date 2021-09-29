@@ -1,16 +1,31 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickMaterializeDialog : ClickBase
+    /// <summary>
+    /// Addon MaterializeDialog.
+    /// </summary>
+    public sealed unsafe class ClickMaterializeDialog : ClickBase<AddonMaterializeDialog>
     {
-        protected override string Name => "MaterializeDialog";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickMaterializeDialog"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickMaterializeDialog(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "MaterializeDialog";
 
-        public unsafe ClickMaterializeDialog(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            AvailableClicks["materialize"] = (addon) => SendClick(addon, EventType.CHANGE, 0, ((AddonMaterializeDialog*)addon)->YesButton->AtkComponentBase.OwnerNode);
-        }
+        /// <summary>
+        /// Click the deliver button.
+        /// </summary>
+        [ClickName("materialize")]
+        public void Materialize()
+            => this.ClickButton(0, this.Type->YesButton);
     }
 }

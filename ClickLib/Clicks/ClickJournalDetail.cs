@@ -1,17 +1,38 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickJournalDetail : ClickBase
+    /// <summary>
+    /// Addon JournalDetail.
+    /// </summary>
+    public sealed unsafe class ClickJournalDetail : ClickBase<AddonJournalDetail>
     {
-        protected override string Name => "JournalDetail";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickJournalDetail"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickJournalDetail(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "JournalDetail";
 
-        public unsafe ClickJournalDetail(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            AvailableClicks["journal_detail_accept"] = (addon) => SendClick(addon, EventType.CHANGE, 1, ((AddonJournalDetail*)addon)->AcceptButton);
-            AvailableClicks["journal_detail_decline"] = (addon) => SendClick(addon, EventType.CHANGE, 2, ((AddonJournalDetail*)addon)->AcceptButton);
-        }
+        /// <summary>
+        /// Click the accept button.
+        /// </summary>
+        [ClickName("journal_detail_accept")]
+        public void Accept()
+            => this.ClickButton(1, this.Type->AcceptButton);
+
+        /// <summary>
+        /// Click the decline button.
+        /// </summary>
+        [ClickName("journal_detail_decline")]
+        public void Decline()
+            => this.ClickButton(2, this.Type->DeclineButton);
     }
 }

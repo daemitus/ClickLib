@@ -1,43 +1,87 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
-using System;
-using System.Runtime.InteropServices;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickSelectString : ClickBase
+    /// <summary>
+    /// Addon SelectString.
+    /// </summary>
+    public sealed unsafe class ClickSelectString : ClickBase<AddonSelectString>
     {
-        protected override string Name => "SelectString";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickSelectString"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickSelectString(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "SelectString";
 
-        public unsafe ClickSelectString(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            AvailableClicks["select_string1"] = (addon) => ClickItem(addon, 0);
-            AvailableClicks["select_string2"] = (addon) => ClickItem(addon, 1);
-            AvailableClicks["select_string3"] = (addon) => ClickItem(addon, 2);
-            AvailableClicks["select_string4"] = (addon) => ClickItem(addon, 3);
-            AvailableClicks["select_string5"] = (addon) => ClickItem(addon, 4);
-            AvailableClicks["select_string6"] = (addon) => ClickItem(addon, 5);
-            AvailableClicks["select_string7"] = (addon) => ClickItem(addon, 6);
-            AvailableClicks["select_string8"] = (addon) => ClickItem(addon, 7);
-            AvailableClicks["select_string9"] = (addon) => ClickItem(addon, 8);
-        }
+        /// <summary>
+        /// Select the item at the given index.
+        /// </summary>
+        /// <param name="index">Index to select.</param>
+        public void SelectItem(ushort index)
+            => this.ClickList(index, this.Type->PopupMenu.List);
 
-        private unsafe void ClickItem(IntPtr addonPtr, int index)
-        {
-            var addon = (AddonSelectString*)addonPtr;
-            var popupMenu = &addon->PopupMenu;
-            var componentList = popupMenu->List;
+        /// <summary>
+        /// Click the item in index 1.
+        /// </summary>
+        [ClickName("select_string1")]
+        public void SelectItem1()
+            => this.SelectItem(1);
 
-            var arg5 = Marshal.AllocHGlobal(0x40);
-            for (var i = 0; i < 0x40; i++)
-                Marshal.WriteByte(arg5, i, 0);
+        /// <summary>
+        /// Click the item in index 2.
+        /// </summary>
+        [ClickName("select_string2")]
+        public void SelectItem2()
+            => this.SelectItem(2);
 
-            Marshal.WriteIntPtr(arg5, new IntPtr(componentList->ItemRendererList[index].AtkComponentListItemRenderer));
-            Marshal.WriteInt16(arg5, 0x10, (short)index);
-            Marshal.WriteInt16(arg5, 0x16, (short)index);
+        /// <summary>
+        /// Click the item in index 3.
+        /// </summary>
+        [ClickName("select_string3")]
+        public void SelectItem3()
+            => this.SelectItem(3);
 
-            SendClick(new IntPtr(popupMenu), EventType.LIST_INDEX_CHANGE, 0, componentList->AtkComponentBase.OwnerNode, arg5);
-        }
+        /// <summary>
+        /// Click the item in index 4.
+        /// </summary>
+        [ClickName("select_string4")]
+        public void SelectItem4()
+            => this.SelectItem(4);
+
+        /// <summary>
+        /// Click the item in index 5.
+        /// </summary>
+        [ClickName("select_string5")]
+        public void SelectItem5()
+            => this.SelectItem(5);
+
+        /// <summary>
+        /// Click the item in index 6.
+        /// </summary>
+        [ClickName("select_string6")]
+        public void SelectItem6()
+            => this.SelectItem(6);
+
+        /// <summary>
+        /// Click the item in index 7.
+        /// </summary>
+        [ClickName("select_string7")]
+        public void SelectItem7()
+            => this.SelectItem(7);
+
+        /// <summary>
+        /// Click the item in index 8.
+        /// </summary>
+        [ClickName("select_string8")]
+        public void SelectItem8()
+            => this.SelectItem(8);
     }
 }

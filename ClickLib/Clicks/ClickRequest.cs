@@ -1,17 +1,38 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickRequest : ClickBase
+    /// <summary>
+    /// Addon Request.
+    /// </summary>
+    public sealed unsafe class ClickRequest : ClickBase<AddonRequest>
     {
-        protected override string Name => "Request";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickRequest"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickRequest(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "Request";
 
-        public unsafe ClickRequest(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            AvailableClicks["request_hand_over"] = (addon) => SendClick(addon, EventType.CHANGE, 0, ((AddonRequest*)addon)->HandOverButton);
-            AvailableClicks["request_cancel"] = (addon) => SendClick(addon, EventType.CHANGE, 1, ((AddonRequest*)addon)->CancelButton);
-        }
+        /// <summary>
+        /// Click the hand over button.
+        /// </summary>
+        [ClickName("request_hand_over")]
+        public void HandOver()
+            => this.ClickButton(0, this.Type->HandOverButton);
+
+        /// <summary>
+        /// Click the cancel button.
+        /// </summary>
+        [ClickName("request_cancel")]
+        public void Cancel()
+            => this.ClickButton(1, this.Type->CancelButton);
     }
 }

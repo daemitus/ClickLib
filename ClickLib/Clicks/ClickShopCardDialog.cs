@@ -1,17 +1,32 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickShopCardDialog : ClickBase
+    /// <summary>
+    /// Addon ShopCardDialog.
+    /// </summary>
+    public sealed unsafe class ClickShopCardDialog : ClickBase<AddonShopCardDialog>
     {
-        protected override string Name => "ShopCardDialog";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickShopCardDialog"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickShopCardDialog(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "ShopCardDialog";
 
-        public unsafe ClickShopCardDialog(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            // TODO: Set card quantity
-            AvailableClicks["sell_triple_triad_card"] = (addon) => SendClick(addon, EventType.CHANGE, 0, ((AddonShopCardDialog*)addon)->AtkUnitBase.UldManager.NodeList[3]);
-        }
+        /// <summary>
+        /// Click the sell button.
+        /// </summary>
+        [ClickName("sell_triple_triad_card")]
+        public unsafe void Sell()
+            => this.ClickButton(0, (AtkComponentButton*)this.Type->AtkUnitBase.UldManager.NodeList[3]);
     }
 }

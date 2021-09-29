@@ -1,17 +1,38 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickRecipeNote : ClickBase
+    /// <summary>
+    /// Addon RecipeNote.
+    /// </summary>
+    public sealed unsafe class ClickRecipeNote : ClickBase<AddonRecipeNote>
     {
-        protected override string Name => "RecipeBook";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickRecipeNote"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickRecipeNote(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "RecipeNote";
 
-        public unsafe ClickRecipeNote(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            AvailableClicks["synthesize"] = (addon) => SendClick(addon, EventType.CHANGE, 13, ((AddonRecipeNote*)addon)->SynthesizeButton->AtkComponentBase.OwnerNode);
-            AvailableClicks["trial_synthesis"] = (addon) => SendClick(addon, EventType.CHANGE, 15, ((AddonRecipeNote*)addon)->TrialSynthesisButton->AtkComponentBase.OwnerNode);
-        }
+        /// <summary>
+        /// Click the synthesize button.
+        /// </summary>
+        [ClickName("synthesize")]
+        public void Synthesize()
+            => this.ClickButton(13, this.Type->SynthesizeButton);
+
+        /// <summary>
+        /// Click the trial synthesis button.
+        /// </summary>
+        [ClickName("trial_synthesis")]
+        public void TrialSynthesis()
+            => this.ClickButton(15, this.Type->TrialSynthesisButton);
     }
 }

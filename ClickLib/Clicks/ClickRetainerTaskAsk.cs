@@ -1,17 +1,38 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickRetainerTaskAsk : ClickBase
+    /// <summary>
+    /// Addon RetainerTaskAsk.
+    /// </summary>
+    public sealed unsafe class ClickRetainerTaskAsk : ClickBase<AddonRetainerTaskAsk>
     {
-        protected override string Name => "RetainerTaskAsk";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickRetainerTaskAsk"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickRetainerTaskAsk(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "RetainerTaskAsk";
 
-        public unsafe ClickRetainerTaskAsk(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            AvailableClicks["retainer_venture_ask_assign"] = (addon) => SendClick(addon, EventType.CHANGE, 1, ((AddonRetainerTaskAsk*)addon)->AssignButton->AtkComponentBase.OwnerNode);
-            AvailableClicks["retainer_venture_ask_return"] = (addon) => SendClick(addon, EventType.CHANGE, 2, ((AddonRetainerTaskAsk*)addon)->ReturnButton->AtkComponentBase.OwnerNode);
-        }
+        /// <summary>
+        /// Click the assign button.
+        /// </summary>
+        [ClickName("retainer_venture_ask_assign")]
+        public void Assign()
+            => this.ClickButton(1, this.Type->AssignButton);
+
+        /// <summary>
+        /// Click the return button.
+        /// </summary>
+        [ClickName("retainer_venture_ask_return")]
+        public void Return()
+            => this.ClickButton(2, this.Type->ReturnButton);
     }
 }

@@ -1,5 +1,8 @@
 ﻿namespace ClickLib
 {
+    /// <summary>
+    /// Various event types.
+    /// </summary>
     public enum EventType : ushort
     {
         NORMAL = 1,

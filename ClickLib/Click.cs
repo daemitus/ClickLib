@@ -1,55 +1,93 @@
-﻿using Dalamud.Plugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace ClickLib
 {
+    /// <summary>
+    /// Main class for clicking by name.
+    /// </summary>
     public static class Click
     {
-        private static List<ClickBase> Clickables { get; } = new List<ClickBase>();
+        private static readonly Dictionary<string, PrecompiledDelegate> AvailableClicks = new();
+        private static bool initialized = false;
 
-        private static bool SetupComplete = false;
+        private delegate void PrecompiledDelegate(IntPtr addon);
 
-        public static void Initialize(DalamudPluginInterface pluginInterface)
+        /// <summary>
+        /// Preloads the mapping of click names. Otherwise happens at first usage of <see cref="SendClick"/>.
+        /// </summary>
+        public static void Initialize()
         {
-            if (!SetupComplete)
+            if (initialized)
+                return;
+
+            initialized = true;
+
+            FFXIVClientStructs.Resolver.Initialize();
+
+            // Get all parameterless methods, of types that inherit from ClickBase
+            var clicks = typeof(ClickBase).Assembly.GetTypes()
+                .Where(type => type.IsSubclassOf(typeof(ClickBase)) && !type.IsGenericType)
+                .SelectMany(cls => cls.GetMethods())
+                .Where(method => method.GetParameters().Length == 0)
+                .Select(method => (method, method.GetCustomAttribute<ClickNameAttribute>()?.Name))
+                .Where(tpl => tpl.Name != null);
+
+            foreach (var click in clicks)
             {
-                SetupComplete = true;
+                var method = click.method;
+                var clickType = method.DeclaringType!;
+                var ctor = clickType.GetConstructor(new[] { typeof(IntPtr) })!;
 
-                var types = typeof(ClickBase).Assembly.GetTypes()
-                    .Where(t => t.IsSubclassOf(typeof(ClickBase)));
+                var param = Expression.Parameter(typeof(IntPtr), "addon");
 
-                foreach (var type in types)
-                {
-                    var ctor = type.GetConstructor(new Type[] { typeof(DalamudPluginInterface) });
-                    var clickable = (ClickBase)ctor.Invoke(new object[] { pluginInterface });
-                    Clickables.Add(clickable);
-                }
+                var blockExpr = Expression.Block(
+                    Expression.Call(
+                        Expression.New(ctor, param),
+                        method));
+                var lambdaExpr = Expression.Lambda<PrecompiledDelegate>(blockExpr, param);
+                var compiled = lambdaExpr.Compile()!;
+
+                AvailableClicks.Add(click.Name!, compiled);
             }
         }
 
-        public static void SendClick(string name) => SendClick(name, default);
-
-        public static void SendClick(string name, IntPtr addon)
+        /// <summary>
+        /// Send a click by the name of the individual click.
+        /// </summary>
+        /// <param name="name">Click name.</param>
+        /// <param name="addon">Pointer to an existing addon.</param>
+        public static void SendClick(string name, IntPtr addon = default)
         {
-            if (!SetupComplete)
-                throw new InvalidClickException("Click has not been initialized yet");
+            if (!initialized)
+                throw new InvalidClickException("Not initialized yet");
 
-            foreach (var clickable in Clickables)
+            if (!AvailableClicks.TryGetValue(name, out var clickDelegate))
+                throw new ClickNotFoundError($"Click \"{name}\" does not exist");
+
+            clickDelegate!(addon);
+        }
+
+        /// <summary>
+        /// Send a click by the name of the individual click.
+        /// </summary>
+        /// <param name="name">Click name.</param>
+        /// <param name="addon">Pointer to an existing addon.</param>
+        /// <returns>A value indicating whether the delegate was successfully called.</returns>
+        public static bool TrySendClick(string name, IntPtr addon = default)
+        {
+            try
             {
-                try
-                {
-                    if (clickable.Click(name, addon))
-                        return;
-                }
-                catch (InvalidClickException ex)
-                {
-                    throw new InvalidClickException($"Error while performing {name} click", ex);
-                }
+                SendClick(name, addon);
+                return true;
             }
-
-            throw new ClickNotFoundError("Invalid click");
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

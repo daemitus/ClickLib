@@ -1,26 +1,87 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
-using System;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickContextIconMenu : ClickBase
+    /// <summary>
+    /// Addon ContextIconMenu.
+    /// </summary>
+    public sealed unsafe class ClickContextIconMenu : ClickBase<AddonContextIconMenu>
     {
-        protected override string Name => "ContextIconMenu";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickContextIconMenu"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickContextIconMenu(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "ContextIconMenu";
 
-        public unsafe ClickContextIconMenu(DalamudPluginInterface pluginInterface) : base(pluginInterface)
-        {
-            //AvailableClicks["context_icon_menu1"] = (addon) => ContextIconMenu(addon, 1);
-        }
+        /// <summary>
+        /// Select the item at the given index.
+        /// </summary>
+        /// <param name="index">Index to select.</param>
+        public void SelectItem(ushort index)
+            => this.ClickList(index, this.Type->AtkComponentList240);
 
-        private unsafe void ContextIconMenu(IntPtr addon, int index)
-        {
-            var uiAddon = (AddonContextIconMenu*)addon;
-            var target = uiAddon->AtkComponentList240->AtkComponentBase.OwnerNode;
-            //SendClick(EventType.LIST_ITEM_CLICK, 3, target);
-            //SendClick(EventType.LIST_INDEX_CHANGE, 0, target, index);
-            //SendClick(EventType.LIST_ITEM_DOUBLE_CLICK, 2, target);
-        }
+        /// <summary>
+        /// Click the item in index 1.
+        /// </summary>
+        [ClickName("select_context_icon1")]
+        public void SelectItem1()
+            => this.SelectItem(1);
+
+        /// <summary>
+        /// Click the item in index 2.
+        /// </summary>
+        [ClickName("select_context_icon2")]
+        public void SelectItem2()
+            => this.SelectItem(2);
+
+        /// <summary>
+        /// Click the item in index 3.
+        /// </summary>
+        [ClickName("select_context_icon3")]
+        public void SelectItem3()
+            => this.SelectItem(3);
+
+        /// <summary>
+        /// Click the item in index 4.
+        /// </summary>
+        [ClickName("select_context_icon4")]
+        public void SelectItem4()
+            => this.SelectItem(4);
+
+        /// <summary>
+        /// Click the item in index 5.
+        /// </summary>
+        [ClickName("select_context_icon5")]
+        public void SelectItem5()
+            => this.SelectItem(5);
+
+        /// <summary>
+        /// Click the item in index 6.
+        /// </summary>
+        [ClickName("select_context_icon6")]
+        public void SelectItem6()
+            => this.SelectItem(6);
+
+        /// <summary>
+        /// Click the item in index 7.
+        /// </summary>
+        [ClickName("select_context_icon7")]
+        public void SelectItem7()
+            => this.SelectItem(7);
+
+        /// <summary>
+        /// Click the item in index 8.
+        /// </summary>
+        [ClickName("select_context_icon8")]
+        public void SelectItem8()
+            => this.SelectItem(8);
     }
 }
