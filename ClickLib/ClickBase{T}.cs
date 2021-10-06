@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 using FFXIVClientStructs.FFXIV.Component.GUI;
 
@@ -16,7 +13,8 @@ namespace ClickLib
     /// <param name="which">Internal routing number.</param>
     /// <param name="eventData">Event data.</param>
     /// <param name="inputData">Keyboard and mouse data.</param>
-    internal unsafe delegate void ReceiveEventDelegate(IntPtr addon, EventType evt, uint which, IntPtr eventData, IntPtr inputData);
+    /// <returns>The addon address.</returns>
+    internal delegate IntPtr ReceiveEventDelegate(IntPtr addon, EventType evt, uint which, IntPtr eventData, IntPtr inputData);
 
     /// <summary>
     /// Click base class.
@@ -78,8 +76,8 @@ namespace ClickLib
         /// <param name="which">Internal game click routing.</param>
         /// <param name="target">Target node.</param>
         /// <param name="type">Event type.</param>
-        protected void ClickDragDrop(uint which, AtkComponentDragDrop* target, EventType type = EventType.ICON_TEXT_ROLL_OUT)
-            => this.ClickComponent(type, which, target->AtkComponentBase.OwnerNode);
+        protected void ClickCheckBox(uint which, AtkComponentCheckBox* target, EventType type = EventType.CHANGE)
+            => this.ClickComponent(type, which, target->AtkComponentButton.AtkComponentBase.OwnerNode);
 
         /// <summary>
         /// Send a click.
@@ -87,8 +85,8 @@ namespace ClickLib
         /// <param name="which">Internal game click routing.</param>
         /// <param name="target">Target node.</param>
         /// <param name="type">Event type.</param>
-        protected void ClickCheckBox(uint which, AtkComponentCheckBox* target, EventType type = EventType.ICON_TEXT_ROLL_OUT)
-            => this.ClickComponent(type, which, target->AtkComponentButton.AtkComponentBase.OwnerNode);
+        protected void ClickDragDrop(uint which, AtkComponentDragDrop* target, EventType type = EventType.ICON_TEXT_ROLL_OUT)
+            => this.ClickComponent(type, which, target->AtkComponentBase.OwnerNode);
 
         /// <summary>
         /// Send a click.
@@ -118,8 +116,6 @@ namespace ClickLib
         /// <param name="type">Event type.</param>
         protected void ClickList(ushort index, AtkComponentList* target, EventType type = EventType.LIST_INDEX_CHANGE)
         {
-            index--;
-
             if (index < 0 || index >= target->ListLength)
                 throw new ArgumentOutOfRangeException(nameof(index), "List index is out of range");
 
