@@ -120,40 +120,14 @@ namespace ClickLib
         /// <param name="type">Event type.</param>
         protected static void ClickAddonList(ushort index, PopupMenu* popupMenu, EventType type = EventType.LIST_INDEX_CHANGE)
         {
-            // var targetList = popupMenu->List;
-            // if (index < 0 || index >= popupMenu->EntryCount)
-            //     throw new ArgumentOutOfRangeException(nameof(index), "List index is out of range");
-            //
-            // var eventData = Marshal.AllocHGlobal(0x18);
-            // var inputData = Marshal.AllocHGlobal(0x40);
-            // 
-            // Marshal.WriteIntPtr(eventData, 0x8, (IntPtr)targetList->AtkComponentBase.OwnerNode);
-            // Marshal.WriteIntPtr(eventData, 0x10, (IntPtr)popupMenu);
-            //
-            // Marshal.WriteIntPtr(inputData, (IntPtr)targetList->ItemRendererList[index].AtkComponentListItemRenderer);
-            // Marshal.WriteInt16(inputData, 0x10, (short)index);
-            // Marshal.WriteInt16(inputData, 0x16, (short)index);
-            //
-            // InvokeReceiveEvent(&popupMenu->AtkEventListener, 0, type, eventData, inputData);
-            //
-            // Marshal.FreeHGlobal(eventData);
-            // Marshal.FreeHGlobal(inputData);
-        }
+            var targetList = popupMenu->List;
+            if (index < 0 || index >= popupMenu->EntryCount)
+                throw new ArgumentOutOfRangeException(nameof(index), "List index is out of range");
 
-        /// <summary>
-        /// Send a click.
-        /// </summary>
-        /// <param name="component">The click recipient.</param>
-        /// <param name="which">Internal game click routing.</param>
-        /// <param name="type">Event type.</param>
-        /// <param name="eventData">Event data.</param>
-        /// <param name="inputData">Input data.</param>
-        protected static void ClickComponent(AtkComponentBase* component, uint which, EventType type, EventData? eventData = null, InputData? inputData = null)
-        {
-            eventData ??= new EventData(component->CollisionNode1, component);
-            inputData ??= new InputData();
+            var eventData = new EventData(targetList->AtkComponentBase.OwnerNode, popupMenu);
+            var inputData = new InputData(popupMenu, index);
 
-            InvokeReceiveEvent(&component->AtkEventListener, which, type, eventData, inputData);
+            InvokeReceiveEvent(&popupMenu->AtkEventListener, 0, type, eventData, inputData);
 
             eventData.Dispose();
             inputData.Dispose();
@@ -223,6 +197,24 @@ namespace ClickLib
                 this.Data[4] = null;
                 this.Data[5] = null;
                 this.Data[6] = (void*)1;
+                this.Data[7] = null;
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="InputData"/> class.
+            /// </summary>
+            /// <param name="popupMenu">List popup menu.</param>
+            /// <param name="index">Selected index.</param>
+            public InputData(PopupMenu* popupMenu, ushort index)
+            {
+                this.Data = (void**)Marshal.AllocHGlobal(0x40).ToPointer();
+                this.Data[0] = popupMenu->List->ItemRendererList[index].AtkComponentListItemRenderer;
+                this.Data[1] = null;
+                this.Data[2] = (void*)(index | ((ulong)index << 48));
+                this.Data[3] = null;
+                this.Data[4] = null;
+                this.Data[5] = null;
+                this.Data[6] = null;
                 this.Data[7] = null;
             }
 
