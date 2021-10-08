@@ -26,13 +26,17 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("request_hand_over")]
         public void HandOver()
-            => this.ClickButton(0, this.Type->HandOverButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->HandOverButton, 0);
+        }
 
         /// <summary>
         /// Click the cancel button.
         /// </summary>
         [ClickName("request_cancel")]
         public void Cancel()
-            => this.ClickButton(1, this.Type->CancelButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->CancelButton, 1);
+        }
     }
 }

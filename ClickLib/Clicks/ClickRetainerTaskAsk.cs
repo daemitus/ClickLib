@@ -26,13 +26,17 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("retainer_venture_ask_assign")]
         public void Assign()
-            => this.ClickButton(1, this.Type->AssignButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->AssignButton, 1);
+        }
 
         /// <summary>
         /// Click the return button.
         /// </summary>
         [ClickName("retainer_venture_ask_return")]
         public void Return()
-            => this.ClickButton(2, this.Type->ReturnButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->ReturnButton, 2);
+        }
     }
 }

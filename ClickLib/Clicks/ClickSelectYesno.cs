@@ -26,20 +26,26 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("select_yes")]
         public void Yes()
-            => this.ClickButton(0, this.Type->YesButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->YesButton, 0);
+        }
 
         /// <summary>
         /// Click the no button.
         /// </summary>
         [ClickName("select_no")]
         public void No()
-            => this.ClickButton(1, this.Type->NoButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->NoButton, 1);
+        }
 
-        /// <summary>
-        /// Click the confirm checkbox.
-        /// </summary>
-        [ClickName("select_confirm")]
-        public void Confirm()
-            => this.ClickCheckBox(3, this.Type->ConfirmCheckBox);
+        // /// <summary>
+        // /// Click the confirm checkbox.
+        // /// </summary>
+        // [ClickName("select_confirm")]
+        // public void Confirm()
+        // {
+        //     ClickAddonCheckBox(&this.Addon->AtkUnitBase, this.Addon->ConfirmCheckBox, 3);
+        // }
     }
 }

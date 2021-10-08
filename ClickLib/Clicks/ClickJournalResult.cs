@@ -26,13 +26,17 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("journal_result_complete")]
         public void Complete()
-            => this.ClickButton(1, this.Type->CompleteButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->CompleteButton, 1);
+        }
 
         /// <summary>
         /// Click the decline button.
         /// </summary>
         [ClickName("journal_result_decline")]
         public void Decline()
-            => this.ClickButton(2, this.Type->DeclineButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->DeclineButton, 2);
+        }
     }
 }

@@ -26,6 +26,8 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("materialize")]
         public void Materialize()
-            => this.ClickButton(0, this.Type->YesButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->YesButton, 0);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 
 using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 
 namespace ClickLib.Clicks
 {
@@ -26,7 +27,9 @@ namespace ClickLib.Clicks
         /// </summary>
         /// <param name="index">Index to select.</param>
         public void SelectItem(ushort index)
-            => this.ClickList(index, this.Type->PopupMenu.List);
+        {
+            ClickAddonList(index, &this.Addon->PopupMenu.PopupMenu);
+        }
 
         /// <summary>
         /// Click the item in index 1.
@@ -75,5 +78,11 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("select_icon_string8")]
         public void SelectItem8() => this.SelectItem(7);
+
+        /// <summary>
+        /// Click the item in index 9.
+        /// </summary>
+        [ClickName("select_icon_string9")]
+        public void SelectItem9() => this.SelectItem(8);
     }
 }

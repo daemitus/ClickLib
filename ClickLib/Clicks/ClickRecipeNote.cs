@@ -26,13 +26,17 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("synthesize")]
         public void Synthesize()
-            => this.ClickButton(13, this.Type->SynthesizeButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->SynthesizeButton, 13);
+        }
 
         /// <summary>
         /// Click the trial synthesis button.
         /// </summary>
         [ClickName("trial_synthesis")]
         public void TrialSynthesis()
-            => this.ClickButton(15, this.Type->TrialSynthesisButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->TrialSynthesisButton, 15);
+        }
     }
 }

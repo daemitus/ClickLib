@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,7 +17,7 @@ namespace ClickLib
         private delegate void PrecompiledDelegate(IntPtr addon);
 
         /// <summary>
-        /// Preloads the mapping of click names. Otherwise happens at first usage of <see cref="SendClick"/>.
+        /// Load the mapping of click names.
         /// </summary>
         public static void Initialize()
         {
@@ -44,10 +44,7 @@ namespace ClickLib
 
                 var param = Expression.Parameter(typeof(IntPtr), "addon");
 
-                var blockExpr = Expression.Block(
-                    Expression.Call(
-                        Expression.New(ctor, param),
-                        method));
+                var blockExpr = Expression.Block(Expression.Call(Expression.New(ctor, param), method));
                 var lambdaExpr = Expression.Lambda<PrecompiledDelegate>(blockExpr, param);
                 var compiled = lambdaExpr.Compile()!;
 

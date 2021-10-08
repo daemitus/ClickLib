@@ -27,6 +27,8 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("sell_triple_triad_card")]
         public unsafe void Sell()
-            => this.ClickButton(0, (AtkComponentButton*)this.Type->AtkUnitBase.UldManager.NodeList[3]);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, (AtkComponentButton*)this.Addon->AtkUnitBase.UldManager.NodeList[3], 0);
+        }
     }
 }

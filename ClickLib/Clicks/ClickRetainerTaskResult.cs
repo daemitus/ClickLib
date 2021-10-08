@@ -26,13 +26,17 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("retainer_venture_result_confirm")]
         public void Confirm()
-            => this.ClickButton(2, this.Type->ConfirmButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->ConfirmButton, 2);
+        }
 
         /// <summary>
         /// Click the reassign button.
         /// </summary>
         [ClickName("retainer_venture_result_reassign")]
         public void Reassign()
-            => this.ClickButton(3, this.Type->ReassignButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->ReassignButton, 3);
+        }
     }
 }

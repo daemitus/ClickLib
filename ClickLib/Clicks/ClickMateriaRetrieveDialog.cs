@@ -27,13 +27,17 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("retrieve_materia_begin")]
         public void Begin()
-            => this.ClickButton(0, (AtkComponentButton*)this.Type->AtkUnitBase.UldManager.NodeList[4]);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, (AtkComponentButton*)this.Addon->AtkUnitBase.UldManager.NodeList[4], 0);
+        }
 
         /// <summary>
         /// Click the return button.
         /// </summary>
         [ClickName("retrieve_materia_return")]
         public void Return()
-            => this.ClickButton(1, (AtkComponentButton*)this.Type->AtkUnitBase.UldManager.NodeList[3]);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, (AtkComponentButton*)this.Addon->AtkUnitBase.UldManager.NodeList[3], 1);
+        }
     }
 }

@@ -26,13 +26,17 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("desynthesize")]
         public void Desynthesize()
-            => this.ClickButton(1, this.Type->DesynthesizeButton);
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->DesynthesizeButton, 1);
+        }
 
-        /// <summary>
-        /// Click the desynthesize checkbox button.
-        /// </summary>
-        [ClickName("desynthesize_checkbox")]
-        public void CheckBox()
-            => this.ClickCheckBox(3, this.Type->CheckBox);
+        // /// <summary>
+        // /// Click the desynthesize checkbox button.
+        // /// </summary>
+        // [ClickName("desynthesize_checkbox")]
+        // public void CheckBox()
+        // {
+        //     ClickAddonCheckBox(&this.Addon->AtkUnitBase, this.Addon->CheckBox, 3);
+        // }
     }
 }

@@ -26,90 +26,116 @@ namespace ClickLib.Clicks
         /// </summary>
         [ClickName("guild_leve_fieldcraft")]
         public void Fieldcraft()
-            => this.ClickRadioButton(6, this.Type->FieldcraftButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->FieldcraftButton, 6);
+        }
 
         /// <summary>
         /// Click the tradecraft button.
         /// </summary>
         [ClickName("guild_leve_tradecraft")]
         public void Tradecraft()
-            => this.ClickRadioButton(7, this.Type->TradecraftButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->TradecraftButton, 7);
+        }
 
         /// <summary>
         /// Click the carpenter button.
         /// </summary>
         [ClickName("guild_leve_carpenter")]
         public void Carpenter()
-            => this.ClickRadioButton(9, this.Type->CarpenterButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->CarpenterButton, 9);
+        }
 
         /// <summary>
         /// Click the blacksmith button.
         /// </summary>
         [ClickName("guild_leve_blacksmith")]
         public void Blacksmith()
-            => this.ClickRadioButton(10, this.Type->BlacksmithButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->BlacksmithButton, 10);
+        }
 
         /// <summary>
         /// Click the armorer button.
         /// </summary>
         [ClickName("guild_leve_armorer")]
         public void Armorer()
-            => this.ClickRadioButton(11, this.Type->ArmorerButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->ArmorerButton, 11);
+        }
 
         /// <summary>
         /// Click the goldsmith button.
         /// </summary>
         [ClickName("guild_leve_goldsmith")]
         public void Goldsmith()
-            => this.ClickRadioButton(12, this.Type->GoldsmithButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->GoldsmithButton, 12);
+        }
 
         /// <summary>
         /// Click the leatherworker button.
         /// </summary>
         [ClickName("guild_leve_leatherworker")]
         public void Leatherworker()
-            => this.ClickRadioButton(13, this.Type->LeatherworkerButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->LeatherworkerButton, 13);
+        }
 
         /// <summary>
         /// Click the weaver button.
         /// </summary>
         [ClickName("guild_leve_weaver")]
         public void Weaver()
-            => this.ClickRadioButton(14, this.Type->WeaverButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->WeaverButton, 14);
+        }
 
         /// <summary>
         /// Click the alchemist button.
         /// </summary>
         [ClickName("guild_leve_alchemist")]
         public void Alchemist()
-            => this.ClickRadioButton(15, this.Type->AlchemistButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->AlchemistButton, 15);
+        }
 
         /// <summary>
         /// Click the culinarian button.
         /// </summary>
         [ClickName("guild_leve_culinarian")]
         public void Culinarian()
-            => this.ClickRadioButton(16, this.Type->CulinarianButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->CulinarianButton, 16);
+        }
 
         /// <summary>
         /// Click the miner button.
         /// </summary>
         [ClickName("guild_leve_miner")]
         public void Miner()
-            => this.ClickRadioButton(9, this.Type->MinerButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->MinerButton, 9);
+        }
 
         /// <summary>
         /// Click the botanist button.
         /// </summary>
         [ClickName("guild_leve_botanist")]
         public void Botanist()
-            => this.ClickRadioButton(10, this.Type->BotanistButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->BotanistButton, 10);
+        }
 
         /// <summary>
         /// Click the fisher button.
         /// </summary>
         [ClickName("guild_leve_fisher")]
         public void Fisher()
-            => this.ClickRadioButton(11, this.Type->FisherButton);
+        {
+            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->FisherButton, 11);
+        }
     }
 }
