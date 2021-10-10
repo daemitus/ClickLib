@@ -1,4 +1,5 @@
-﻿using Dalamud.Plugin;
+﻿using Dalamud.Logging;
+using Dalamud.Plugin;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 using System.Runtime.InteropServices;
@@ -26,8 +27,8 @@ namespace ClickLib.Clicks
         private unsafe void ClickItem(IntPtr addonPtr, int index)
         {
             var addon = (AddonSelectIconString*)addonPtr;
-            var eventThing = &addon->SelectIconStringThing;
-            var componentList = eventThing->AtkComponentList;
+            var popupMenu = &addon->PopupMenu;
+            var componentList = popupMenu->PopupMenu.List;
 
             PluginLog.Information($"Perparing to send select_string{index}");
 
@@ -39,7 +40,7 @@ namespace ClickLib.Clicks
             Marshal.WriteInt16(arg5, 0x10, (short)index);
             Marshal.WriteInt16(arg5, 0x16, (short)index);
 
-            SendClick(new IntPtr(eventThing), EventType.LIST_INDEX_CHANGE, 0, componentList->AtkComponentBase.OwnerNode, arg5);
+            SendClick(new IntPtr(popupMenu), EventType.LIST_INDEX_CHANGE, 0, componentList->AtkComponentBase.OwnerNode, arg5);
         }
     }
 }

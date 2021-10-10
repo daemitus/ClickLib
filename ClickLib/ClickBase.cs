@@ -63,12 +63,21 @@ namespace ClickLib
 
         protected IntPtr GetAddonByName(string name) => GetAddonByName(name, 1);
 
-        protected IntPtr GetAddonByName(string name, int index)
+        protected unsafe IntPtr GetAddonByName(string name, int index = 1)
         {
-            var addon = Interface.Framework.Gui.GetUiObjectByName(name, index);
-            if (addon == IntPtr.Zero)
-                throw new InvalidClickException("Window is not available for that click");
-            return addon;
+            var atkStage = AtkStage.GetSingleton();
+            if (atkStage == null)
+                throw new InvalidClickException("AtkStage is not available");
+
+            var unitMgr = atkStage->RaptureAtkUnitManager;
+            if (unitMgr == null)
+                throw new InvalidClickException("UnitMgr is not available");
+
+            var addon = unitMgr->GetAddonByName(name, index);
+            if (addon == null)
+                throw new InvalidClickException("Addon is not available");
+
+            return (IntPtr)addon;
         }
 
         protected unsafe ReceiveEventDelegate GetReceiveEventDelegate(AtkEventListener* eventListener)

@@ -1,4 +1,5 @@
 ﻿using Dalamud.Plugin;
+using FFXIVClientStructs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace ClickLib
             if (!SetupComplete)
             {
                 SetupComplete = true;
+
+                Resolver.Initialize();
 
                 var types = typeof(ClickBase).Assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(ClickBase)));
                 foreach (var type in types)
