@@ -1,16 +1,35 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
-    internal class ClickGatheringMasterpiece : ClickBase
+    /// <summary>
+    /// Addon GatheringMasterpiece.
+    /// </summary>
+    public sealed unsafe class ClickGatheringMasterpiece : ClickAddonBase<AddonGatheringMasterpiece>
     {
-        protected override string Name => "Collectables";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickGatheringMasterpiece"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickGatheringMasterpiece(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "GatheringMasterpiece";
 
-        public unsafe ClickGatheringMasterpiece(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+        public static implicit operator ClickGatheringMasterpiece(IntPtr addon) => new(addon);
+
+        /// <summary>
+        /// Click the collect button.
+        /// </summary>
+        [ClickName("collect")]
+        public void Collect()
         {
-            AvailableClicks["collect"] = (addon) => SendClick(addon, EventType.ICON_TEXT_ROLL_OUT, 112, ((AddonGatheringMasterpiece*)addon)->CollectDragDrop->AtkComponentBase.OwnerNode);
+            ClickAddonDragDrop(&this.Addon->AtkUnitBase, this.Addon->CollectDragDrop, 112);
         }
     }
 }

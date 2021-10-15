@@ -1,20 +1,53 @@
-﻿using Dalamud.Plugin;
+﻿using System;
+
 using FFXIVClientStructs.FFXIV.Client.UI;
 
 namespace ClickLib.Clicks
 {
-    internal sealed class ClickSelectYesNo : ClickBase
+    /// <summary>
+    /// Addon SelectYesNo.
+    /// </summary>
+    public sealed unsafe class ClickSelectYesNo : ClickAddonBase<AddonSelectYesno>
     {
-        protected override string Name => "SelectYesno";
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClickSelectYesNo"/> class.
+        /// </summary>
+        /// <param name="addon">Addon pointer.</param>
+        public ClickSelectYesNo(IntPtr addon = default)
+            : base(addon)
+        {
+        }
+
+        /// <inheritdoc/>
         protected override string AddonName => "SelectYesno";
 
-        public unsafe ClickSelectYesNo(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+        public static implicit operator ClickSelectYesNo(IntPtr addon) => new(addon);
+
+        /// <summary>
+        /// Click the yes button.
+        /// </summary>
+        [ClickName("select_yes")]
+        public void Yes()
         {
-            AvailableClicks["select_yes"] = (addon) => SendClick(addon, EventType.CHANGE, 0, ((AddonSelectYesno*)addon)->YesButton->AtkComponentBase.OwnerNode);
-            AvailableClicks["select_no"] = (addon) => SendClick(addon, EventType.CHANGE, 1, ((AddonSelectYesno*)addon)->NoButton->AtkComponentBase.OwnerNode);
-            
-            // This doesn't actually work. However toggling the button's ResNode flags (1 << 5) makes it clickable.
-            // AvailableClicks["select_checkbox"] = (addon) => SendClick(addon, EventType.CHANGE, 3, ((AddonSelectYesno*)addon)->ConfirmCheckBox->AtkComponentButton.AtkComponentBase.OwnerNode);
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->YesButton, 0);
         }
+
+        /// <summary>
+        /// Click the no button.
+        /// </summary>
+        [ClickName("select_no")]
+        public void No()
+        {
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->NoButton, 1);
+        }
+
+        // /// <summary>
+        // /// Click the confirm checkbox.
+        // /// </summary>
+        // [ClickName("select_confirm")]
+        // public void Confirm()
+        // {
+        //     ClickAddonCheckBox(&this.Addon->AtkUnitBase, this.Addon->ConfirmCheckBox, 3);
+        // }
     }
 }
