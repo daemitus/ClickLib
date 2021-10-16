@@ -25,6 +25,13 @@ namespace ClickLib.Clicks
         public static implicit operator ClickMateriaRetrieveDialog(IntPtr addon) => new(addon);
 
         /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickMateriaRetrieveDialog Using(IntPtr addon) => new(addon);
+
+        /// <summary>
         /// Click the begin button.
         /// </summary>
         [ClickName("retrieve_materia_begin")]

@@ -24,6 +24,13 @@ namespace ClickLib.Clicks
         public static implicit operator ClickSalvageDialog(IntPtr addon) => new(addon);
 
         /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickSalvageDialog Using(IntPtr addon) => new(addon);
+
+        /// <summary>
         /// Click the desynthesize button.
         /// </summary>
         [ClickName("desynthesize")]
@@ -32,13 +39,13 @@ namespace ClickLib.Clicks
             ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->DesynthesizeButton, 1);
         }
 
-        // /// <summary>
-        // /// Click the desynthesize checkbox button.
-        // /// </summary>
-        // [ClickName("desynthesize_checkbox")]
-        // public void CheckBox()
-        // {
-        //     ClickAddonCheckBox(&this.Addon->AtkUnitBase, this.Addon->CheckBox, 3);
-        // }
+        /// <summary>
+        /// Click the desynthesize checkbox button.
+        /// </summary>
+        [ClickName("desynthesize_checkbox")]
+        public void CheckBox()
+        {
+            ClickAddonCheckBox(&this.Addon->AtkUnitBase, this.Addon->CheckBox, 3);
+        }
     }
 }

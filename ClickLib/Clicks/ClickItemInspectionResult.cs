@@ -25,6 +25,13 @@ namespace ClickLib.Clicks
         public static implicit operator ClickItemInspectionResult(IntPtr addon) => new(addon);
 
         /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickItemInspectionResult Using(IntPtr addon) => new(addon);
+
+        /// <summary>
         /// Click the next button.
         /// </summary>
         [ClickName("item_inspection_result_next")]

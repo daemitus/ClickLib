@@ -19,11 +19,11 @@ namespace ClickLib
     /// <summary>
     /// Click base class.
     /// </summary>
-    /// <typeparam name="T">FFXIVClientStructs addon type.</typeparam>
-    public abstract unsafe class ClickAddonBase<T> : ClickBase where T : unmanaged
+    /// <typeparam name="TStruct">FFXIVClientStructs addon type.</typeparam>
+    public abstract unsafe class ClickAddonBase<TStruct> : ClickBase where TStruct : unmanaged
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClickAddonBase{T}"/> class.
+        /// Initializes a new instance of the <see cref="ClickAddonBase{TStruct}"/> class.
         /// </summary>
         /// <param name="addon">Addon address.</param>
         public ClickAddonBase(IntPtr addon)
@@ -32,7 +32,7 @@ namespace ClickLib
                 addon = this.GetAddonByName(this.AddonName);
 
             this.AddonAddress = addon;
-            this.Addon = (T*)addon;
+            this.Addon = (TStruct*)addon;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace ClickLib
         /// <summary>
         /// Gets a pointer to the type.
         /// </summary>
-        protected T* Addon { get; }
+        protected TStruct* Addon { get; }
 
         /// <summary>
         /// Send a click.

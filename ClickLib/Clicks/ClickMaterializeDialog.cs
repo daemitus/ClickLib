@@ -24,6 +24,13 @@ namespace ClickLib.Clicks
         public static implicit operator ClickMaterializeDialog(IntPtr addon) => new(addon);
 
         /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickMaterializeDialog Using(IntPtr addon) => new(addon);
+
+        /// <summary>
         /// Click the deliver button.
         /// </summary>
         [ClickName("materialize")]

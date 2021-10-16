@@ -24,6 +24,13 @@ namespace ClickLib.Clicks
         public static implicit operator ClickRetainerTaskResult(IntPtr addon) => new(addon);
 
         /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickRetainerTaskResult Using(IntPtr addon) => new(addon);
+
+        /// <summary>
         /// Click the confirm button.
         /// </summary>
         [ClickName("retainer_venture_result_confirm")]

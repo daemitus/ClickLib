@@ -23,6 +23,13 @@ namespace ClickLib.Clicks
 
         public static implicit operator ClickContextIconMenu(IntPtr addon) => new(addon);
 
+        /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickContextIconMenu Using(IntPtr addon) => new(addon);
+
         // /// <summary>
         // /// Select the item at the given index.
         // /// </summary>

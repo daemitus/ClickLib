@@ -25,6 +25,13 @@ namespace ClickLib.Clicks
         public static implicit operator ClickShopCardDialog(IntPtr addon) => new(addon);
 
         /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickShopCardDialog Using(IntPtr addon) => new(addon);
+
+        /// <summary>
         /// Click the sell button.
         /// </summary>
         [ClickName("sell_triple_triad_card")]

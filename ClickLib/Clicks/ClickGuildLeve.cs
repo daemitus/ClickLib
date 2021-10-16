@@ -24,6 +24,13 @@ namespace ClickLib.Clicks
         public static implicit operator ClickGuildLeve(IntPtr addon) => new(addon);
 
         /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickGuildLeve Using(IntPtr addon) => new(addon);
+
+        /// <summary>
         /// Click the fieldcraft button.
         /// </summary>
         [ClickName("guild_leve_fieldcraft")]

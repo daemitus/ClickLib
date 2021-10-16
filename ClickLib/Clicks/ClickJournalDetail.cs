@@ -24,6 +24,13 @@ namespace ClickLib.Clicks
         public static implicit operator ClickJournalDetail(IntPtr addon) => new(addon);
 
         /// <summary>
+        /// Instantiate this click using the given addon.
+        /// </summary>
+        /// <param name="addon">Addon to reference.</param>
+        /// <returns>A click instance.</returns>
+        public static ClickJournalDetail Using(IntPtr addon) => new(addon);
+
+        /// <summary>
         /// Click the accept button.
         /// </summary>
         [ClickName("journal_detail_accept")]
