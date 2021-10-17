@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -55,7 +55,7 @@ namespace ClickLib
             /// <summary>
             /// Initializes a new instance of the <see cref="EventData"/> class.
             /// </summary>
-            public EventData()
+            private EventData()
             {
                 this.Data = (void**)Marshal.AllocHGlobal(0x18).ToPointer();
                 this.Data[0] = null;
@@ -64,22 +64,23 @@ namespace ClickLib
             }
 
             /// <summary>
+            /// Gets the data pointer.
+            /// </summary>
+            public void** Data { get; }
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="EventData"/> class.
             /// </summary>
             /// <param name="target">Target.</param>
             /// <param name="listener">Event listener.</param>
-            public EventData(void* target, void* listener)
+            /// <returns>Event data.</returns>
+            public static EventData ForNormalTarget(void* target, void* listener)
             {
-                this.Data = (void**)Marshal.AllocHGlobal(0x18).ToPointer();
-                this.Data[0] = null;
-                this.Data[1] = target;
-                this.Data[2] = listener;
+                var data = new EventData();
+                data.Data[1] = target;
+                data.Data[2] = listener;
+                return data;
             }
-
-            /// <summary>
-            /// Gets the data pointer.
-            /// </summary>
-            public void** Data { get; }
 
             /// <inheritdoc/>
             public void Dispose()
@@ -96,7 +97,7 @@ namespace ClickLib
             /// <summary>
             /// Initializes a new instance of the <see cref="InputData"/> class.
             /// </summary>
-            public InputData()
+            private InputData()
             {
                 this.Data = (void**)Marshal.AllocHGlobal(0x40).ToPointer();
                 this.Data[0] = null;
@@ -110,27 +111,32 @@ namespace ClickLib
             }
 
             /// <summary>
+            /// Gets the data pointer.
+            /// </summary>
+            public void** Data { get; }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="InputData"/> class.
+            /// </summary>
+            /// <returns>Input data.</returns>
+            public static InputData Empty()
+            {
+                return new InputData();
+            }
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="InputData"/> class.
             /// </summary>
             /// <param name="popupMenu">List popup menu.</param>
             /// <param name="index">Selected index.</param>
-            public InputData(PopupMenu* popupMenu, ushort index)
+            /// <returns>Input data.</returns>
+            public static InputData ForPopupMenu(PopupMenu* popupMenu, ushort index)
             {
-                this.Data = (void**)Marshal.AllocHGlobal(0x40).ToPointer();
-                this.Data[0] = popupMenu->List->ItemRendererList[index].AtkComponentListItemRenderer;
-                this.Data[1] = null;
-                this.Data[2] = (void*)(index | ((ulong)index << 48));
-                this.Data[3] = null;
-                this.Data[4] = null;
-                this.Data[5] = null;
-                this.Data[6] = null;
-                this.Data[7] = null;
+                var data = new InputData();
+                data.Data[0] = popupMenu->List->ItemRendererList[index].AtkComponentListItemRenderer;
+                data.Data[2] = (void*)(index | ((ulong)index << 48));
+                return data;
             }
-
-            /// <summary>
-            /// Gets the data pointer.
-            /// </summary>
-            public void** Data { get; }
 
             /// <inheritdoc/>
             public void Dispose()

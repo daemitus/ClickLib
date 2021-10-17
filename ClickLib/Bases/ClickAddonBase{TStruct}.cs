@@ -99,8 +99,8 @@ namespace ClickLib
         /// <param name="type">Event type.</param>
         protected static void ClickAddonStage(AtkUnitBase* addonBase, AtkStage* target, uint which, EventType type = EventType.MOUSE_CLICK)
         {
-            var eventData = new EventData(target, addonBase);
-            var inputData = new InputData();
+            var eventData = EventData.ForNormalTarget(target, addonBase);
+            var inputData = InputData.Empty();
 
             InvokeReceiveEvent(&addonBase->AtkEventListener, type, which, eventData, inputData);
 
@@ -119,8 +119,8 @@ namespace ClickLib
         /// <param name="inputData">Input data.</param>
         protected static void ClickAddonComponent(AtkUnitBase* addonBase, AtkComponentNode* target, uint which, EventType type, EventData? eventData = null, InputData? inputData = null)
         {
-            eventData ??= new EventData(target, addonBase);
-            inputData ??= new InputData();
+            eventData ??= EventData.ForNormalTarget(target, addonBase);
+            inputData ??= InputData.Empty();
 
             InvokeReceiveEvent(&addonBase->AtkEventListener, type, which, eventData, inputData);
 
@@ -140,8 +140,8 @@ namespace ClickLib
             if (index < 0 || index >= popupMenu->EntryCount)
                 throw new ArgumentOutOfRangeException(nameof(index), "List index is out of range");
 
-            var eventData = new EventData(targetList->AtkComponentBase.OwnerNode, popupMenu);
-            var inputData = new InputData(popupMenu, index);
+            var eventData = EventData.ForNormalTarget(targetList->AtkComponentBase.OwnerNode, popupMenu);
+            var inputData = InputData.ForPopupMenu(popupMenu, index);
 
             InvokeReceiveEvent(&popupMenu->AtkEventListener, type, 0, eventData, inputData);
 
