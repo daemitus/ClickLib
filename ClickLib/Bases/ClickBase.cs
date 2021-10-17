@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -84,11 +84,7 @@ namespace ClickLib
             /// <inheritdoc/>
             public void Dispose()
             {
-                Task.Run(() =>
-                {
-                    Task.Delay(10000).Wait();
-                    Marshal.FreeHGlobal((IntPtr)this.Data);
-                });
+                Marshal.FreeHGlobal((IntPtr)this.Data);
             }
         }
 
@@ -139,11 +135,7 @@ namespace ClickLib
             /// <inheritdoc/>
             public void Dispose()
             {
-                Task.Run(() =>
-                {
-                    Task.Delay(10000).Wait();
-                    Marshal.FreeHGlobal((IntPtr)this.Data);
-                });
+                Marshal.FreeHGlobal((IntPtr)this.Data);
             }
         }
     }
