@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using Reloaded.Memory.Sources;
+using Reloaded.Memory.Utilities;
 
 namespace ClickLib
 {
@@ -12,6 +13,13 @@ namespace ClickLib
     /// </summary>
     public abstract unsafe class ClickBase
     {
+        private static readonly CircularBuffer Buffer;
+
+        static ClickBase()
+        {
+            Buffer = new CircularBuffer(0x2048, Memory.Instance);
+        }
+
         /// <summary>
         /// AtkEventListener receive event delegate.
         /// </summary>
@@ -50,14 +58,17 @@ namespace ClickLib
         /// <summary>
         /// Event data.
         /// </summary>
-        public sealed class EventData : IDisposable
+        public sealed class EventData
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="EventData"/> class.
             /// </summary>
             private EventData()
             {
-                this.Data = (void**)Marshal.AllocHGlobal(0x18).ToPointer();
+                this.Data = (void**)Buffer.Add(new byte[0x18]);
+                if (this.Data == null)
+                    throw new ArgumentNullException("EventData could not be created, null");
+
                 this.Data[0] = null;
                 this.Data[1] = null;
                 this.Data[2] = null;
@@ -81,25 +92,22 @@ namespace ClickLib
                 data.Data[2] = listener;
                 return data;
             }
-
-            /// <inheritdoc/>
-            public void Dispose()
-            {
-                Marshal.FreeHGlobal((IntPtr)this.Data);
-            }
         }
 
         /// <summary>
         /// Input data.
         /// </summary>
-        public sealed class InputData : IDisposable
+        public sealed class InputData
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="InputData"/> class.
             /// </summary>
             private InputData()
             {
-                this.Data = (void**)Marshal.AllocHGlobal(0x40).ToPointer();
+                this.Data = (void**)Buffer.Add(new byte[0x40]);
+                if (this.Data == null)
+                    throw new ArgumentNullException("InputData could not be created, null");
+
                 this.Data[0] = null;
                 this.Data[1] = null;
                 this.Data[2] = null;
@@ -136,12 +144,6 @@ namespace ClickLib
                 data.Data[0] = popupMenu->List->ItemRendererList[index].AtkComponentListItemRenderer;
                 data.Data[2] = (void*)(index | ((ulong)index << 48));
                 return data;
-            }
-
-            /// <inheritdoc/>
-            public void Dispose()
-            {
-                Marshal.FreeHGlobal((IntPtr)this.Data);
             }
         }
     }

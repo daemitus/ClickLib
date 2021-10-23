@@ -103,9 +103,6 @@ namespace ClickLib
             var inputData = InputData.Empty();
 
             InvokeReceiveEvent(&addonBase->AtkEventListener, type, which, eventData, inputData);
-
-            eventData.Dispose();
-            inputData.Dispose();
         }
 
         /// <summary>
@@ -123,9 +120,6 @@ namespace ClickLib
             inputData ??= InputData.Empty();
 
             InvokeReceiveEvent(&addonBase->AtkEventListener, type, which, eventData, inputData);
-
-            eventData.Dispose();
-            inputData.Dispose();
         }
 
         /// <summary>
@@ -144,9 +138,6 @@ namespace ClickLib
             var inputData = InputData.ForPopupMenu(popupMenu, index);
 
             InvokeReceiveEvent(&popupMenu->AtkEventListener, type, 0, eventData, inputData);
-
-            eventData.Dispose();
-            inputData.Dispose();
         }
 
         private IntPtr GetAddonByName(string name, int index = 1)
