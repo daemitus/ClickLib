@@ -36,7 +36,7 @@ namespace ClickLib.Clicks
         [ClickName("talk")]
         public unsafe void Click()
         {
-            ClickAddonStage(&this.Addon->AtkUnitBase, this.Addon->AtkStage, 0);
+            ClickAddonStage(&this.Addon->AtkUnitBase, this.Addon->AtkEventListenerUnk.AtkStage, 0);
         }
     }
 }
