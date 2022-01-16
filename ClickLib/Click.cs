@@ -54,6 +54,12 @@ namespace ClickLib
         }
 
         /// <summary>
+        /// Get a list of available click strings that can be used with SendClick.
+        /// </summary>
+        /// <returns>A list of click names.</returns>
+        public static List<string> GetClickNames() => AvailableClicks.Keys.ToList();
+
+        /// <summary>
         /// Send a click by the name of the individual click.
         /// </summary>
         /// <param name="name">Click name.</param>
