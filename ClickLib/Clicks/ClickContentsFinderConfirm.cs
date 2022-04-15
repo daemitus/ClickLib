@@ -36,7 +36,7 @@ namespace ClickLib.Clicks
         [ClickName("duty_commence")]
         public void Commence()
         {
-            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->CommenceButton, 0x7);
+            ClickAddonButton(&this.Addon->AtkUnitBase, this.Addon->CommenceButton, 0x8);
         }
     }
 }
