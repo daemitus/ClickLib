@@ -1,150 +1,63 @@
 ﻿using System;
 
-using FFXIVClientStructs.FFXIV.Client.UI;
+using ClickLib.Attributes;
+using ClickLib.Bases;
 
-namespace ClickLib.Clicks
+namespace ClickLib.Clicks;
+
+/// <summary>
+/// Addon GuildLeve.
+/// </summary>
+public sealed unsafe class ClickGuildLeve : ClickBase<ClickGuildLeve>
 {
     /// <summary>
-    /// Addon GuildLeve.
+    /// Initializes a new instance of the <see cref="ClickGuildLeve"/> class.
     /// </summary>
-    public sealed unsafe class ClickGuildLeve : ClickAddonBase<AddonGuildLeve>
+    /// <param name="addon">Addon pointer.</param>
+    public ClickGuildLeve(IntPtr addon = default)
+        : base("GuildLeve", addon)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClickGuildLeve"/> class.
-        /// </summary>
-        /// <param name="addon">Addon pointer.</param>
-        public ClickGuildLeve(IntPtr addon = default)
-            : base(addon)
-        {
-        }
-
-        /// <inheritdoc/>
-        protected override string AddonName => "GuildLeve";
-
-        public static implicit operator ClickGuildLeve(IntPtr addon) => new(addon);
-
-        /// <summary>
-        /// Instantiate this click using the given addon.
-        /// </summary>
-        /// <param name="addon">Addon to reference.</param>
-        /// <returns>A click instance.</returns>
-        public static ClickGuildLeve Using(IntPtr addon) => new(addon);
-
-        /// <summary>
-        /// Click the fieldcraft button.
-        /// </summary>
-        [ClickName("guild_leve_fieldcraft")]
-        public void Fieldcraft()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->FieldcraftButton, 6);
-        }
-
-        /// <summary>
-        /// Click the tradecraft button.
-        /// </summary>
-        [ClickName("guild_leve_tradecraft")]
-        public void Tradecraft()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->TradecraftButton, 7);
-        }
-
-        /// <summary>
-        /// Click the carpenter button.
-        /// </summary>
-        [ClickName("guild_leve_carpenter")]
-        public void Carpenter()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->CarpenterButton, 9);
-        }
-
-        /// <summary>
-        /// Click the blacksmith button.
-        /// </summary>
-        [ClickName("guild_leve_blacksmith")]
-        public void Blacksmith()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->BlacksmithButton, 10);
-        }
-
-        /// <summary>
-        /// Click the armorer button.
-        /// </summary>
-        [ClickName("guild_leve_armorer")]
-        public void Armorer()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->ArmorerButton, 11);
-        }
-
-        /// <summary>
-        /// Click the goldsmith button.
-        /// </summary>
-        [ClickName("guild_leve_goldsmith")]
-        public void Goldsmith()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->GoldsmithButton, 12);
-        }
-
-        /// <summary>
-        /// Click the leatherworker button.
-        /// </summary>
-        [ClickName("guild_leve_leatherworker")]
-        public void Leatherworker()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->LeatherworkerButton, 13);
-        }
-
-        /// <summary>
-        /// Click the weaver button.
-        /// </summary>
-        [ClickName("guild_leve_weaver")]
-        public void Weaver()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->WeaverButton, 14);
-        }
-
-        /// <summary>
-        /// Click the alchemist button.
-        /// </summary>
-        [ClickName("guild_leve_alchemist")]
-        public void Alchemist()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->AlchemistButton, 15);
-        }
-
-        /// <summary>
-        /// Click the culinarian button.
-        /// </summary>
-        [ClickName("guild_leve_culinarian")]
-        public void Culinarian()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->CulinarianButton, 16);
-        }
-
-        /// <summary>
-        /// Click the miner button.
-        /// </summary>
-        [ClickName("guild_leve_miner")]
-        public void Miner()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->MinerButton, 9);
-        }
-
-        /// <summary>
-        /// Click the botanist button.
-        /// </summary>
-        [ClickName("guild_leve_botanist")]
-        public void Botanist()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->BotanistButton, 10);
-        }
-
-        /// <summary>
-        /// Click the fisher button.
-        /// </summary>
-        [ClickName("guild_leve_fisher")]
-        public void Fisher()
-        {
-            ClickAddonRadioButton(&this.Addon->AtkUnitBase, this.Addon->FisherButton, 11);
-        }
     }
+
+    public static implicit operator ClickGuildLeve(IntPtr addon) => new(addon);
+
+    /// <summary>
+    /// Instantiate this click using the given addon.
+    /// </summary>
+    /// <param name="addon">Addon to reference.</param>
+    /// <returns>A click instance.</returns>
+    public static ClickGuildLeve Using(IntPtr addon) => new(addon);
+
+    /// <summary>
+    /// Switch to a different job category.
+    /// </summary>
+    /// <param name="index">Job category index in the UI.</param>
+    public void SwitchCategory(int index)
+        => this.FireCallback(10, index, 0);
+
+    /// <summary>
+    /// Switch to a different job leve tab.
+    /// </summary>
+    /// <param name="index">Job index in the UI.</param>
+    public void SwitchJob(int index)
+        => this.FireCallback(12, index);
+
+#pragma warning disable SA1134, SA1516, SA1600
+    [ClickName("guild_leve_battlecraft")] public void Battlecraft() => this.SwitchCategory(0);
+    [ClickName("guild_leve_fieldcraft")] public void Fieldcraft() => this.SwitchCategory(1);
+    [ClickName("guild_leve_tradecraft")] public void Tradecraft() => this.SwitchCategory(2);
+
+    [ClickName("guild_leve_carpenter")] public void Carpenter() => this.SwitchJob(0);
+    [ClickName("guild_leve_blacksmith")] public void Blacksmith() => this.SwitchJob(1);
+    [ClickName("guild_leve_armorer")] public void Armorer() => this.SwitchJob(2);
+    [ClickName("guild_leve_goldsmith")] public void Goldsmith() => this.SwitchJob(3);
+    [ClickName("guild_leve_leatherworker")] public void Leatherworker() => this.SwitchJob(4);
+    [ClickName("guild_leve_weaver")] public void Weaver() => this.SwitchJob(5);
+    [ClickName("guild_leve_alchemist")] public void Alchemist() => this.SwitchJob(6);
+    [ClickName("guild_leve_culinarian")] public void Culinarian() => this.SwitchJob(7);
+
+    [ClickName("guild_leve_miner")] public void Miner() => this.SwitchJob(0);
+    [ClickName("guild_leve_botanist")] public void Botanist() => this.SwitchJob(1);
+    [ClickName("guild_leve_fisher")] public void Fisher() => this.SwitchJob(2);
+#pragma warning restore SA1134, SA1516, SA1600
 }
