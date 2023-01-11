@@ -30,8 +30,6 @@ public static class Click
 
         initialized = true;
 
-        FFXIVClientStructs.Interop.Resolver.GetInstance.Resolve();
-
         // Get all parameterless methods, of types that inherit from ClickBase
         var clicks = typeof(IClickable).Assembly.GetTypes()
             .Where(type => type.IsAssignableTo(typeof(IClickable)) && !type.IsGenericType)
