@@ -49,5 +49,7 @@ public sealed unsafe class ClickSelectString : ClickBase<ClickSelectString, Addo
     [ClickName("select_string10")] public void SelectItem10() => this.SelectItem(9);
     [ClickName("select_string11")] public void SelectItem11() => this.SelectItem(10);
     [ClickName("select_string12")] public void SelectItem12() => this.SelectItem(11);
+    [ClickName("select_string13")] public void SelectItem13() => this.SelectItem(12);
+    [ClickName("select_string14")] public void SelectItem14() => this.SelectItem(13);
 #pragma warning restore SA1134,SA1516,SA1600
 }
