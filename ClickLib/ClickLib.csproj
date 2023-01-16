@@ -54,7 +54,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <Reference Include="Dalamud" Private="False" />
-    <Reference Include="FFXIVClientStructs" Private="False" />
+    <!--<Reference Include="FFXIVClientStructs" Private="False" />-->
+    <ProjectReference Include="..\lib\FFXIVClientStructs\FFXIVClientStructs\FFXIVClientStructs.csproj" />
   </ItemGroup>
 
 </Project>
