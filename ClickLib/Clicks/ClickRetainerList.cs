@@ -46,5 +46,9 @@ public sealed unsafe class ClickRetainerList : ClickBase<ClickRetainerList>
     [ClickName("select_retainer8")] public void Retainer8() => this.Retainer(7);
     [ClickName("select_retainer9")] public void Retainer9() => this.Retainer(8);
     [ClickName("select_retainer10")] public void Retainer10() => this.Retainer(9);
+    [ClickName("select_retainer11")] public void Retainer11() => this.Retainer(10);
+    [ClickName("select_retainer12")] public void Retainer12() => this.Retainer(11);
+    [ClickName("select_retainer13")] public void Retainer13() => this.Retainer(12);
+    [ClickName("select_retainer14")] public void Retainer14() => this.Retainer(13);
 #pragma warning restore SA1134,SA1516,SA1600
 }
